@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GreenLeaf Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>🌱 GreenLeaf Organics</h1>
+    <p>Secure Access Portal</p>
+</header>
+
+<main style="max-width:420px;">
+    <div class="card">
+        <h2>Login</h2>
+
+        <form method="POST">
+            <label>Select Role</label>
+            <select name="role" required style="width:100%; padding:10px;">
+                <option value="">-- Choose Role --</option>
+                <option value="staff">Staff (Order Entry)</option>
+                <option value="admin">Admin (Reports & Analytics)</option>
+            </select>
+
+            <button style="margin-top:20px;">Login</button>
+        </form>
+    </div>
+</main>
+
+<footer>
+    Demo Role-Based Access Control
+</footer>
+
+</body>
+</html>

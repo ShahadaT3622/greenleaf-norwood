@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="page-title">📊 Store Activity</h2>
+
+<!-- ================= Date Filter ================= -->
+<form method="POST" class="card" style="margin-bottom:25px;">
+    <label for="summary_date"><strong>Select Date:</strong></label>
+    <input
+        type="date"
+        id="summary_date"
+        name="summary_date"
+        value="{{ selected_date }}"
+        required
+    >
+    <button type="submit" class="primary-btn" style="margin-left:10px;">
+        View
+    </button>
+</form>
+
+<!-- ================= Summary ================= -->
+<div class="card">
+    <p><strong>Date:</strong> {{ summary.date }}</p>
+    <p><strong>Orders Placed:</strong> {{ summary.total_orders }}</p>
+    <p>
+        <strong>Most Popular Product:</strong>
+        {{ summary.most_popular_product or "Not available" }}
+    </p>
+</div>
+
+<!-- ================= Order List ================= -->
+{% if orders %}
+    <h3 style="margin-top:30px;">🧾 Order Details</h3>
+
+    {% for order in orders %}
+        <div class="card" style="margin-bottom:15px;">
+            <p>
+                <strong>Order ID:</strong> {{ order["id"] }}<br>
+                <strong>Order Date:</strong> {{ order["order_date"] }}
+            </p>
+
+            <ul>
+                {% for item in order["items"] %}
+                    <li>
+                        {{ item["product_name"] }}
+                        <span style="color:#555;">— Qty: {{ item["quantity"] }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+{% else %}
+    <p class="hint" style="margin-top:20px;">
+        No orders found for this date.
+    </p>
+{% endif %}
+
+<p class="hint">
+    ✔ Read-only customer view<br>
+    ✔ No pricing or financial information displayed
+</p>
+
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="page-title">🛍️ Place Your Order</h2>
+
+<form method="POST" action="{{ url_for('customer_submit') }}" class="card order-card">
+
+    <!-- ================= Customer ================= -->
+    <div class="section">
+        <h3>👤 Your Details</h3>
+
+        <div class="form-grid">
+            <div>
+                <label>Full Name</label>
+                <input name="name" required>
+            </div>
+
+            <div>
+                <label>Email</label>
+                <input name="email" type="email" required>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= Products ================= -->
+    <div class="section">
+        <h3>🧺 Products</h3>
+
+        {% for product in products %}
+        <div class="product-row">
+
+            <div class="product-info">
+                <strong>{{ product.name }}</strong><br>
+                AUD ${{ "%.2f"|format(product.price) }}
+            </div>
+
+            <div>
+                {% if product.stock_quantity == 0 %}
+                    <span class="stock-pill out">Out of Stock</span>
+                {% elif product.stock_quantity < 10 %}
+                    <span class="stock-pill low">
+                        Low Stock: {{ product.stock_quantity }}
+                    </span>
+                {% else %}
+                    <span class="stock-pill ok">
+                        In Stock: {{ product.stock_quantity }}
+                    </span>
+                {% endif %}
+            </div>
+
+            <input
+                class="qty"
+                type="number"
+                name="qty_{{ product.id }}"
+                min="0"
+                {% if product.stock_quantity == 0 %}
+                    disabled
+                {% else %}
+                    max="{{ product.stock_quantity }}"
+                {% endif %}
+                value="0"
+            >
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- ================= Pre-order ================= -->
+    <div class="checkbox">
+        <input type="checkbox" name="preorder" value="yes" id="preorder">
+        <label for="preorder">
+            Allow pre-order if stock is insufficient
+        </label>
+    </div>
+
+    <!-- ================= Submit ================= -->
+    <div style="margin-top:25px;">
+        <button type="submit" class="primary-btn">
+            Place Order
+        </button>
+    </div>
+
+</form>
+
+<p class="hint">
+    ✔ Live inventory from Azure Cosmos DB<br>
+    ✔ Low-stock and out-of-stock indicators<br>
+    ✔ Pre-orders supported for high-demand items
+</p>
+
+{% endblock %}

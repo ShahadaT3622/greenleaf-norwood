@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="page-title">📊 Daily Sales Summary</h2>
+
+<!-- ================= Date Filter ================= -->
+<form method="POST" class="card" style="margin-bottom:20px;">
+    <label for="summary_date"><strong>Select Date:</strong></label>
+    <input
+        type="date"
+        id="summary_date"
+        name="summary_date"
+        value="{{ selected_date }}"
+        required
+    >
+    <button type="submit" class="primary-btn" style="margin-left:10px;">
+        View
+    </button>
+</form>
+
+<!-- ================= Summary Card ================= -->
+<div class="card">
+    <p><strong>Date:</strong> {{ summary.date }}</p>
+    <p><strong>Total Orders:</strong> {{ summary.total_orders }}</p>
+    <p><strong>Total Revenue:</strong> ${{ summary.total_revenue }}</p>
+
+    <p>
+        <strong>Most Popular Product:</strong>
+        {{ summary.most_popular_product or "None" }}
+    </p>
+
+    {% if sql_saved %}
+        <p class="success">✔ Summary stored in Azure SQL successfully</p>
+    {% else %}
+        <p class="warning">
+            ⚠ Azure SQL temporarily unavailable.<br>
+            Summary displayed from Cosmos DB only.
+        </p>
+    {% endif %}
+</div>
+
+<!-- ================= Order Activity ================= -->
+<h3 style="margin-top:30px;">🧾 Order Activity</h3>
+
+{% if orders %}
+    {% for order in orders %}
+        <div class="card" style="margin-bottom:15px;">
+            <p>
+                <strong>Order ID:</strong> {{ order["id"] }}<br>
+                <strong>Customer:</strong> {{ order["customer"]["name"] }}<br>
+                <strong>Email:</strong> {{ order["customer"]["email"] }}
+            </p>
+
+            <ul>
+                {% for item in order["items"] %}
+                    <li>
+                        {{ item["product_name"] }}
+                        — Qty: {{ item["quantity"] }}
+                        — ${{ item["unit_price"] }}
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <p><strong>Order Total:</strong> ${{ order["order_total"] }}</p>
+        </div>
+    {% endfor %}
+{% else %}
+    <p class="hint">No orders found for this date.</p>
+{% endif %}
+
+<!-- ================= PDF Section ================= -->
+<div class="card" style="margin-top:30px;">
+    <h3>📄 Daily Summary PDF</h3>
+    <p>
+        <a
+            href="{{ url_for('serve_pdf', filename='daily_summary_' ~ summary.date ~ '.pdf') }}"
+            target="_blank"
+        >
+            View Summary (PDF)
+        </a>
+        &nbsp; | &nbsp;
+        <a
+            href="{{ url_for('serve_pdf', filename='daily_summary_' ~ summary.date ~ '.pdf') }}"
+            download
+        >
+            Download PDF
+        </a>
+    </p>
+</div>
+
+<p class="hint">
+    ✔ Aggregated from Azure Cosmos DB<br>
+    ✔ Detailed order history available for administrators
+</p>
+
+{% endblock %}

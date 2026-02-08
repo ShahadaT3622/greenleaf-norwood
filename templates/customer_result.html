@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>✅ Order Confirmation</h2>
+
+{% if result.status == "success" %}
+    <p>Thank you for your order!</p>
+
+    <p>
+        <a
+            href="{{ url_for('serve_pdf', filename=invoice_filename) }}"
+            target="_blank"
+        >
+            View Invoice (PDF)
+        </a>
+        &nbsp; | &nbsp;
+        <a
+            href="{{ url_for('serve_pdf', filename=invoice_filename) }}"
+            download
+        >
+            Download Invoice (PDF)
+        </a>
+    </p>
+{% else %}
+    <p class="warning">
+        {{ result.message }}
+    </p>
+{% endif %}
+
+{% endblock %}

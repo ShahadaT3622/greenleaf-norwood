@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="page-title">📦 Staff Inventory Management</h2>
+
+<table class="inventory-table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Current Stock</th>
+            <th>Adjust</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>
+                <strong>{{ product.stock_quantity }}</strong>
+            </td>
+            <td>
+                <form method="POST" action="{{ url_for('inventory_update') }}">
+                    <input
+                        type="hidden"
+                        name="product_id"
+                        value="{{ product.id }}"
+                    >
+                    <input
+                        type="number"
+                        name="adjustment"
+                        value="1"
+                        required
+                        style="width:70px;"
+                    >
+                    <button type="submit" class="primary-btn">
+                        Update
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p class="hint">
+    ➕ Use positive numbers to add stock<br>
+    ➖ Use negative numbers to reduce stock
+</p>
+
+{% endblock %}

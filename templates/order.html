@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GreenLeaf Norwood – Order</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>GreenLeaf Organics – Norwood</h1>
+    <p>Sustainable • Local • Fresh</p>
+</header>
+
+<nav>
+    <a href="/">Place Order</a>
+</nav>
+
+<main>
+    <div class="card">
+        <h2>Customer Order</h2>
+
+        <form method="POST" action="/submit">
+            <label>Full Name</label>
+            <input name="name" required>
+
+            <label>Email</label>
+            <input name="email" type="email" required>
+
+            <label>Organic Apples (AUD $3.50 each)</label>
+            <input name="quantity" type="number" min="1" required>
+
+            <button type="submit">Submit Order</button>
+        </form>
+
+        <div class="hint">
+            Live stock validation • Low-stock alerts • Pre-orders supported
+        </div>
+    </div>
+</main>
+
+<footer>
+    GreenLeaf Organics © 2026
+</footer>
+
+</body>
+</html>

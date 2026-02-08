@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GreenLeaf Organics – Norwood</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>🌱 GreenLeaf Organics</h1>
+    <p>Norwood Store — Cloud Order & Inventory Management</p>
+</header>
+
+<nav class="top-nav">
+
+    <!-- 🌐 PUBLIC CUSTOMER AREA (NO LOGIN) -->
+    {% if not session.get("role") %}
+        <a href="{{ url_for('customer_order') }}" class="public-link">
+            🛍️ Shop Online
+        </a>
+        <a href="{{ url_for('customer_summary') }}">
+            📊 Today’s Summary
+        </a>
+    {% endif %}
+
+    <!-- 👩‍💼 STAFF AREA -->
+    {% if session.get("role") == "staff" %}
+        <a href="{{ url_for('index') }}">🛒 Staff Order Entry</a>
+        <a href="{{ url_for('inventory') }}">📦 Inventory</a>
+    {% endif %}
+
+    <!-- 👑 ADMIN AREA -->
+    {% if session.get("role") == "admin" %}
+        <a href="{{ url_for('summary') }}">📊 Daily Summary</a>
+        <a href="{{ url_for('charts') }}">📈 Analytics</a>
+    {% endif %}
+
+    <!-- 🚪 LOGOUT -->
+    {% if session.get("role") %}
+        <a href="{{ url_for('logout') }}" class="logout-link">
+            🚪 Logout
+        </a>
+    {% endif %}
+
+</nav>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    <p>
+        Powered by Azure Cosmos DB & Azure SQL<br>
+        Python Flask Proof-of-Concept — GreenLeaf Organics
+    </p>
+</footer>
+
+</body>
+</html>

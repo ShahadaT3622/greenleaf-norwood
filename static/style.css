@@ -1,0 +1,385 @@
+/* =========================
+   Global
+========================= */
+body {
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(180deg, #f4f7f6, #eef2f1);
+    margin: 0;
+    color: #263238;
+    line-height: 1.5;
+}
+
+h1, h2, h3, h4 {
+    margin: 0 0 12px;
+    font-weight: 600;
+}
+
+.page-title {
+    margin-bottom: 30px;
+    font-size: 26px;
+}
+
+/* =========================
+   Header
+========================= */
+header {
+    background: linear-gradient(135deg, #1b5e20, #2e7d32);
+    color: white;
+    padding: 34px 20px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+}
+
+header h1 {
+    font-size: 30px;
+    letter-spacing: 0.4px;
+}
+
+header p {
+    opacity: 0.9;
+    font-size: 14px;
+    margin-top: 6px;
+}
+
+/* =========================
+   Navigation
+========================= */
+nav {
+    background: white;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 14px;
+    text-align: center;
+}
+
+nav a {
+    margin: 0 20px;
+    text-decoration: none;
+    font-weight: 600;
+    color: #2e7d32;
+    position: relative;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: #2e7d32;
+    left: 50%;
+    bottom: -6px;
+    transition: 0.3s;
+}
+
+nav a:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+/* =========================
+   Main Layout
+========================= */
+main {
+    padding: 50px 24px;
+    max-width: 1150px;
+    margin: auto;
+}
+
+/* =========================
+   Cards
+========================= */
+.card,
+.order-card {
+    background: white;
+    padding: 36px;
+    border-radius: 14px;
+    box-shadow:
+        0 12px 30px rgba(0,0,0,0.08),
+        0 2px 6px rgba(0,0,0,0.04);
+    margin-bottom: 35px;
+}
+
+/* =========================
+   Sections
+========================= */
+.section {
+    margin-bottom: 32px;
+}
+
+.section h3 {
+    font-size: 18px;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eceff1;
+}
+
+/* =========================
+   Forms
+========================= */
+label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #455a64;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #cfd8dc;
+    transition: 0.2s;
+    margin-top: 6px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #2e7d32;
+    box-shadow: 0 0 0 3px rgba(46,125,50,0.15);
+}
+
+/* =========================
+   Grid
+========================= */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+/* =========================
+   Product Rows
+========================= */
+.product-row {
+    display: grid;
+    grid-template-columns: 1fr auto 100px;
+    gap: 20px;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.product-info strong {
+    font-size: 15px;
+}
+
+.product-info span {
+    font-size: 13px;
+    color: #607d8b;
+}
+
+/* =========================
+   Quantity Input
+========================= */
+.qty-input,
+.qty {
+    text-align: center;
+    font-weight: 600;
+}
+
+/* =========================
+   Stock Badges
+========================= */
+.stock-badge,
+.stock-pill {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    min-width: 90px;
+}
+
+.stock-badge.ok,
+.stock-pill.ok {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.stock-badge.low,
+.stock-pill.low {
+    background: #fff3e0;
+    color: #ef6c00;
+}
+
+.stock-badge.out,
+.stock-pill.out {
+    background: #fdecea;
+    color: #c62828;
+}
+
+/* =========================
+   Checkboxes
+========================= */
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    margin-top: 18px;
+}
+
+/* =========================
+   Buttons
+========================= */
+button,
+.button,
+.primary-btn {
+    background: linear-gradient(135deg, #2e7d32, #1b5e20);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.25s;
+}
+
+button:hover,
+.button:hover,
+.primary-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(46,125,50,0.35);
+}
+
+/* =========================
+   KPI Cards
+========================= */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+    margin-bottom: 40px;
+}
+
+.kpi-card {
+    background: white;
+    padding: 26px;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    text-align: center;
+}
+
+.kpi-card h4 {
+    font-size: 13px;
+    color: #78909c;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.kpi-value {
+    font-size: 34px;
+    font-weight: 700;
+    color: #2e7d32;
+    margin-top: 12px;
+}
+
+/* =========================
+   Status Text
+========================= */
+.success {
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+.warning {
+    color: #ef6c00;
+    font-weight: 600;
+}
+
+.error {
+    color: #c62828;
+    font-weight: 600;
+}
+
+/* =========================
+   Charts
+========================= */
+canvas {
+    margin-top: 20px;
+}
+
+/* =========================
+   Footer
+========================= */
+footer {
+    text-align: center;
+    padding: 26px;
+    font-size: 12px;
+    color: #78909c;
+}
+/* =========================
+   Place Order – Premium Polish
+========================= */
+
+.order-card {
+    max-width: 900px;
+    margin: auto;
+}
+
+.section {
+    margin-bottom: 34px;
+}
+
+.section h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eceff1;
+}
+
+.product-row {
+    transition: background 0.25s ease;
+}
+
+.product-row:hover {
+    background: #f9fbfa;
+    border-radius: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.qty {
+    width: 70px;
+    text-align: center;
+    padding: 10px;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.stock-pill {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.stock-pill.ok {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.stock-pill.low {
+    background: #fff3e0;
+    color: #ef6c00;
+}
+
+.stock-pill.out {
+    background: #fdecea;
+    color: #c62828;
+}
+
+.primary-btn {
+    font-size: 16px;
+    padding: 16px;
+    letter-spacing: 0.4px;
+}
+
+.hint {
+    margin-top: 25px;
+    font-size: 13px;
+    color: #607d8b;
+}

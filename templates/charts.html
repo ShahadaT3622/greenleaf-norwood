@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="page-title">📊 Sales & Inventory Analytics</h2>
+
+<!-- ================= DATE FILTER ================= -->
+<form method="POST" class="card" style="margin-bottom:25px;">
+    <label for="analytics_date"><strong>Filter by Date:</strong></label>
+    <input
+        type="date"
+        id="analytics_date"
+        name="analytics_date"
+        value="{{ selected_date }}"
+    >
+    <button type="submit" class="primary-btn" style="margin-left:10px;">
+        Apply
+    </button>
+
+    {% if selected_date %}
+        <a href="{{ url_for('charts') }}" style="margin-left:15px;">
+            Clear Filter
+        </a>
+    {% endif %}
+</form>
+
+<!-- ================= KPI SUMMARY ================= -->
+<div class="kpi-grid">
+    <div class="kpi-card">
+        <h4>📦 Products</h4>
+        <p class="kpi-value">{{ stock_labels | length }}</p>
+    </div>
+
+    <div class="kpi-card">
+        <h4>🛒 Units Sold</h4>
+        <p class="kpi-value">{{ units_sold }}</p>
+    </div>
+
+    <div class="kpi-card">
+        <h4>⚠ Low Stock Items</h4>
+        <p class="kpi-value">{{ low_stock_count }}</p>
+    </div>
+</div>
+
+<!-- ================= STOCK LEVELS ================= -->
+<div class="card">
+    <h3>📦 Current Stock Levels</h3>
+    <canvas id="stockChart"></canvas>
+    <p class="chart-note">
+        Red = Critical | Orange = Low | Green = Healthy
+    </p>
+</div>
+
+<!-- ================= SALES DISTRIBUTION ================= -->
+<div class="card">
+    <h3>🛒 Product Sales Distribution</h3>
+    <canvas id="salesChart"></canvas>
+</div>
+
+<!-- ================= SALES TREND ================= -->
+<div class="card">
+    <h3>📈 Sales Trend (Orders Over Time)</h3>
+    <canvas id="trendChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const stockChart = document.getElementById('stockChart');
+const salesChart = document.getElementById('salesChart');
+const trendChart = document.getElementById('trendChart');
+
+new Chart(stockChart, {
+    type: 'bar',
+    data: {
+        labels: {{ stock_labels | safe }},
+        datasets: [{
+            data: {{ stock_values | safe }},
+            backgroundColor: {{ stock_colors | safe }},
+            borderRadius: 6
+        }]
+    },
+    options: {
+        plugins: { legend: { display: false } },
+        responsive: true
+    }
+});
+
+new Chart(salesChart, {
+    type: 'doughnut',
+    data: {
+        labels: {{ sales_labels | safe }},
+        datasets: [{
+            data: {{ sales_values | safe }},
+            backgroundColor: [
+                '#2e7d32',
+                '#66bb6a',
+                '#a5d6a7',
+                '#81c784',
+                '#c8e6c9'
+            ]
+        }]
+    },
+    options: { responsive: true }
+});
+
+new Chart(trendChart, {
+    type: 'line',
+    data: {
+        labels: {{ trend_labels | safe }},
+        datasets: [{
+            data: {{ trend_values | safe }},
+            borderColor: '#2e7d32',
+            backgroundColor: 'rgba(46,125,50,0.15)',
+            fill: true,
+            tension: 0.35
+        }]
+    },
+    options: {
+        plugins: { legend: { display: false } },
+        responsive: true
+    }
+});
+</script>
+
+<p class="hint">
+    ✔ Live analytics from Azure Cosmos DB<br>
+    ✔ Date-based administrative analysis supported<br>
+    ✔ Role-restricted, HD-standard reporting dashboard
+</p>
+
+{% endblock %}

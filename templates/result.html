@@ -1,0 +1,76 @@
+<!-- templates/result.html  (FIXED – PDF links work) -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Status</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>Order Confirmation</h1>
+</header>
+
+<main>
+    <div class="card">
+
+        {% if result.status == "success" %}
+            <p class="success">
+                🎉 Congratulations! Your order was submitted successfully.
+            </p>
+
+            {% if result.warnings %}
+                <p class="warning"><strong>Please note:</strong></p>
+                <ul>
+                    {% for w in result.warnings %}
+                        <li class="warning">{{ w }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <p>
+                Your order has been securely recorded.
+                Inventory has been updated in real time using our cloud system.
+            </p>
+
+            <hr>
+
+            <p><strong>Invoice (PDF)</strong></p>
+
+            <p>
+                📄
+                <a href="{{ url_for('serve_pdf', filename=invoice_filename) }}" target="_blank">
+                    View Invoice
+                </a>
+                &nbsp; | &nbsp;
+                ⬇
+                <a href="{{ url_for('serve_pdf', filename=invoice_filename) }}" download>
+                    Download Invoice
+                </a>
+            </p>
+
+        {% else %}
+            <p class="error">❌ Order could not be completed</p>
+            <p>{{ result.message }}</p>
+
+            {% if result.preorder %}
+                <p class="warning">
+                    You may reduce the quantity or enable pre-order to continue.
+                </p>
+            {% endif %}
+        {% endif %}
+
+        <br>
+        <a href="/">← Place another order</a>
+
+    </div>
+</main>
+
+<footer>
+    Azure Cosmos DB • Azure SQL • Flask
+</footer>
+
+</body>
+</html>

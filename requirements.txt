@@ -1,0 +1,8 @@
+Flask
+gunicorn
+azure-cosmos
+pyodbc
+python-dotenv
+requests
+reportlab
+pillow
